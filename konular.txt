@@ -1,0 +1,10 @@
+# Her satır bir konu. Her gün sıradaki satır işlenir. Kendi ünitelerine göre düzenle.
+Merkezi eğilim ölçüleri (ortalama, medyan, mod)
+Değişkenlik ölçüleri (varyans, standart sapma)
+Frekans dağılımları ve grafikler
+Olasılığın temelleri
+Normal dağılım ve z skoru
+Örnekleme ve örnekleme dağılımı
+Güven aralıkları
+Hipotez testlerine giriş
+Korelasyon ve basit regresyon
