@@ -1,0 +1,32 @@
+name: test
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  models: read
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  dene:
+    runs-on: ubuntu-latest
+    steps:
+      - name: A - gpt-4o sade
+        continue-on-error: true
+        run: |
+          curl -sS -m 90 -o cevap.txt -w "DURUM: %{http_code} TUR: %{content_type}\n" "https://models.github.ai/inference/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $GITHUB_TOKEN" -d '{"messages":[{"role":"user","content":"Merhaba de"}],"model":"openai/gpt-4o"}'
+          head -c 500 cevap.txt
+      - name: B - gpt-4.1-mini sade
+        continue-on-error: true
+        run: |
+          curl -sS -m 90 -o cevap.txt -w "DURUM: %{http_code} TUR: %{content_type}\n" "https://models.github.ai/inference/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $GITHUB_TOKEN" -d '{"messages":[{"role":"user","content":"Merhaba de"}],"model":"openai/gpt-4.1-mini"}'
+          head -c 500 cevap.txt
+      - name: C - gpt-4.1-mini betikteki başlıklarla
+        continue-on-error: true
+        run: |
+          curl -sS -m 90 -o cevap.txt -w "DURUM: %{http_code} TUR: %{content_type}\n" "https://models.github.ai/inference/chat/completions" -H "Content-Type: application/json" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" -H "Authorization: Bearer $GITHUB_TOKEN" -d '{"messages":[{"role":"user","content":"Merhaba de"}],"model":"openai/gpt-4.1-mini"}'
+          head -c 500 cevap.txt
+      - name: D - model listesi
+        continue-on-error: true
+        run: |
+          curl -sS -m 90 -o cevap.txt -w "DURUM: %{http_code} TUR: %{content_type}\n" "https://models.github.ai/catalog/models" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" -H "Authorization: Bearer $GITHUB_TOKEN"
+          head -c 800 cevap.txt
