@@ -26,11 +26,13 @@ def sor(model, sistem, kullanici):
         "Content-Type": "application/json",
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "sirket-bot",
     })
     try:
         with urllib.request.urlopen(istek, timeout=120) as r:
             durum = r.status
             tur = r.headers.get("Content-Type", "")
+            son_url = r.geturl()
             ham = r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
         raise RuntimeError("HTTP %s: %s" % (e.code, e.read().decode("utf-8", errors="replace")[:500]))
@@ -39,7 +41,7 @@ def sor(model, sistem, kullanici):
     try:
         return json.loads(ham)["choices"][0]["message"]["content"]
     except (ValueError, KeyError, IndexError, TypeError):
-        raise RuntimeError("Beklenmeyen cevap (durum %s, tur %s): %r" % (durum, tur, ham[:500]))
+        raise RuntimeError("Beklenmeyen cevap (durum %s, tur %s, adres %s): %r" % (durum, tur, son_url, ham[:500]))
 
 
 def main():
